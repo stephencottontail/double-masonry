@@ -1,5 +1,4 @@
-import { Component } from '@wordpress/element';
-import { createElement as el } from '@wordpress/element';
+import { Component, createElement as el } from '@wordpress/element';
 
 class DoubleMasonry extends Component {
     constructor() {
@@ -7,7 +6,7 @@ class DoubleMasonry extends Component {
     }
 
     render() {
-        return el( 'p', {}, 'Hello editor!' );
+        return el( 'p', { className: 'foo' }, 'Hello editor!' );
     }
 }
 

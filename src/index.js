@@ -1,10 +1,13 @@
+import './scss/editor.scss';
+import './scss/style.scss';
+
 import { registerBlockType } from '@wordpress/blocks';
 import { createElement as el } from '@wordpress/element';
-import edit from './edit.js';
+import edit from './edit';
 
 registerBlockType( 'sc/double-masonry', {
     title: 'Masonry Gallery',
-    icon: 'dashicons-format-gallery',
+    icon: 'format-gallery',
     category: 'common',
 
     edit,
