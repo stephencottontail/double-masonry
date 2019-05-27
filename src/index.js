@@ -9,6 +9,12 @@ registerBlockType( 'sc/double-masonry', {
     title: 'Masonry Gallery',
     icon: 'format-gallery',
     category: 'common',
+    attributes: {
+        gallery: {
+            type: 'array',
+            default: []
+        }
+    },
 
     edit,
     save( attributes ) {
