@@ -1,7 +1,8 @@
 import './style.css';
 
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, getBlockDefaultClassName } from '@wordpress/blocks';
 import { createElement as el } from '@wordpress/element';
+import Masonry from 'react-masonry-component';
 import classnames from 'classnames';
 import edit from './edit.js';
 
@@ -17,7 +18,16 @@ registerBlockType( 'sc/double-masonry', {
     },
 
     edit,
-    save( attributes ) {
-        return el( 'p', { className: classnames( 'text-5xl', 'text-purple-600' ) }, 'Hello not-editor!' );
+    save( { attributes } ) {
+        const className = getBlockDefaultClassName( 'sc/double-masonry' );
+        const hasImages = !! attributes.gallery.length;
+
+        const list = el( Masonry, {
+            className: classnames( 'my-8' )
+        }, attributes.gallery.map( img => {
+            return el( 'div', { className: classnames( `${className}__item`, [ 'w-1/3', 'border', 'p-4' ] ) }, ( img.caption || img.url ) )
+        } ) );
+
+        return ( hasImages && list );
     }
 } );

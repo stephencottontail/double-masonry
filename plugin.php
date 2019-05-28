@@ -18,3 +18,6 @@
         ) );
     } );
 
+    add_action( 'wp_enqueue_scripts', function() {
+        wp_enqueue_script( 'sc-double-masonry-frontend', plugins_url( 'build/masonry-frontend.js', __FILE__ ), array( 'jquery', 'masonry', 'imagesloaded' ), null, true );
+    } );
