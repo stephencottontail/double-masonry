@@ -8,7 +8,17 @@ module.exports = {
     module: {
         ...defaultConfig.module,
         rules: [
-            ...defaultConfig.module.rules,
+            {
+                test: /\masonry-frontend.js$/,
+                use: [
+                    {
+                        loader: require.resolve( 'file-loader' ),
+                        options: {
+                            name: '[name].[ext]'
+                        }
+                    }
+                ]
+            },
             {
                 test: /\.css$/,
                 use: [
@@ -40,7 +50,8 @@ module.exports = {
                         }
                     }
                 ]
-            }
+            },
+            ...defaultConfig.module.rules,
         ]
     },
     plugins: [

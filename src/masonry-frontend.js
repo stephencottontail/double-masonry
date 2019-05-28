@@ -1,5 +1,5 @@
 ( function( $ ) {
-    var container = '.wp-block-sc-double-masonry';
+    var container = $( '.wp-block-sc-double-masonry' );
 
     $( document ).ready( function() {
         container.imagesLoaded( function() {

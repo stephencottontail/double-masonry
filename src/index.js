@@ -1,4 +1,5 @@
 import './style.css';
+import './masonry-frontend.js';
 
 import { registerBlockType, getBlockDefaultClassName } from '@wordpress/blocks';
 import { createElement as el } from '@wordpress/element';
