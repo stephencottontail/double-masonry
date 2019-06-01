@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
+
+.wp-block-sc-double-masonry__button {
+    @apply border-2 p-4;
+}
+
+.wp-block-sc-double-masonry__button--primary {
+    @apply bg-blue-100 border-blue-500 text-blue-500;
+
+    transition: all 350ms ease-in;
+}
+
+.wp-block-sc-double-masonry__button--primary:hover,
+.wp-block-sc-double-masonry__button--primary:focus {
+    @apply bg-blue-500 text-blue-100;
+}
+
 @tailwind utilities;

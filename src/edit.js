@@ -11,7 +11,7 @@ class DoubleMasonry extends Component {
     render() {
         const { attributes, setAttributes, className } = this.props;
         const hasImages = !! attributes.gallery.length;
-        const mediaUpload = el( MediaUpload,{
+        const mediaUpload = el( MediaUpload, {
             addToGallery: hasImages,
             gallery: true,
             multiple: true,
@@ -20,10 +20,14 @@ class DoubleMasonry extends Component {
             },
             allowedTypes: [ 'image' ],
             render: ( { open } ) => {
-                return el( 'button', { onClick: open }, 'Open' );
+                return el( 'button', {
+                    className: classnames( `${className}__button ${className}__button--primary` ),
+                    onClick: open
+                }, `${( hasImages ? 'Edit' : 'Create' )} Gallery` )
             },
             value: ( hasImages ? ( attributes.gallery.map( img => img.id ) ) : undefined )
         } );
+
         if ( hasImages ) {
             let widths = attributes.gallery.reduce( ( smallest, img ) => {
                 return ( smallest < img.sizes.full.width ? smallest : img.sizes.full.width );
@@ -35,7 +39,7 @@ class DoubleMasonry extends Component {
             ( hasImages && el( Masonry, {
                 className: classnames( className, { 'my-8': true } ),
             }, attributes.gallery.map( img => {
-                return el( 'div', { className: classnames( 'w-1/3', 'border', 'p-4' ) }, ( img.caption || img.url ) )
+                return el( 'div', { key: img.id.toString(), className: classnames( 'w-1/3', 'border', 'p-4' ) }, ( img.caption || img.url ) )
             } ) ) )
         ];
     }

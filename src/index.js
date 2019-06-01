@@ -26,7 +26,7 @@ registerBlockType( 'sc/double-masonry', {
         const list = el( Masonry, {
             className: classnames( 'my-8' )
         }, attributes.gallery.map( img => {
-            return el( 'div', { className: classnames( `${className}__item`, [ 'w-1/3', 'border', 'p-4' ] ) }, ( img.caption || img.url ) )
+            return el( 'div', { key: img.id, className: classnames( `${className}__item`, [ 'w-1/3', 'border', 'p-4' ] ) }, ( img.caption || img.url ) )
         } ) );
 
         return ( hasImages && list );

@@ -7,7 +7,7 @@
      */
 
     add_action( 'init', function() {
-        wp_register_script( 'sc/double-masonry', plugins_url( 'build/index.js', __FILE__ ), array( 'wp-blocks', 'wp-element' ) );
+        wp_register_script( 'sc/double-masonry', plugins_url( 'build/index.js', __FILE__ ), array( 'wp-blocks', 'wp-block-library', 'wp-element' ) );
 
         wp_register_style( 'sc-double-masonry-style', plugins_url( 'build/index.css', __FILE__ ) );
 
