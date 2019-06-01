@@ -15,6 +15,10 @@ registerBlockType( 'sc/double-masonry', {
         gallery: {
             type: 'array',
             default: []
+        },
+        width: {
+            type: 'number',
+            default: ''
         }
     },
 

@@ -1,6 +1,7 @@
 import { Component, createElement as el } from '@wordpress/element';
 import { MediaUpload } from '@wordpress/block-editor';
 import Masonry from 'react-masonry-component';
+import Measure from 'react-measure';
 import classnames from 'classnames';
 
 class DoubleMasonry extends Component {
@@ -36,11 +37,43 @@ class DoubleMasonry extends Component {
 
         return [
             mediaUpload,
-            ( hasImages && el( Masonry, {
-                className: classnames( className, { 'my-8': true } ),
-            }, attributes.gallery.map( img => {
-                return el( 'div', { key: img.id.toString(), className: classnames( 'w-1/3', 'border', 'p-4' ) }, ( img.caption || img.url ) )
-            } ) ) )
+            ( hasImages && (
+                <Measure
+                bounds
+                onResize={ ( contentRect ) => console.log( contentRect ) }
+                >
+                    { ( { measureRef } ) => {
+                        return [
+                        /**
+                         * the docs don't mention this, but you need `innerRef` instead of just ref for
+                         * 'special' components (i.e., anything that's not a base HTML tag)
+                         *
+                         * what's the difference between `ref` and `innerRef`? no one knows
+                         */
+                        <Masonry innerRef={ measureRef } className={ classnames( className, { 'my-8': true } ) }>
+                            { attributes.gallery.map( img => {
+                                return (
+                                    <div key={ img.id } className={ classnames( 'w-1/3', 'border', 'p-4' ) }>
+                                        { ( img.caption || img.url ) }
+                                    </div>
+                                );
+                            } ) }
+                        </Masonry>
+                    ] } }
+                </Measure>
+            ) ),
+            /*
+            ( hasImages && el( Measure, {
+                onResize: ( contentRect ) => { console.log( contentRect ) }
+            }, ( { measureRef } ) => {
+                return el( Masonry, {
+                    ref: { measureRef },
+                    className: classnames( className, { 'my-8': true } )
+                }, attributes.gallery.map( img => {
+                    return el( 'div', { key: img.id, className: classnames( 'w-1/3', 'border', 'p-4' ) }, ( img.caption || img.url ) )
+                } ) );
+            } ) )
+            */
         ];
     }
 }
