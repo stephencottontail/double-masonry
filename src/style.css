@@ -2,7 +2,7 @@
 @tailwind components;
 
 .wp-block-sc-double-masonry__button {
-    @apply border-2 p-4;
+    @apply border-2 p-1;
 }
 
 .wp-block-sc-double-masonry__button--primary {

@@ -37,9 +37,9 @@ class DoubleMasonry extends Component {
         return [
             mediaUpload,
             ( hasImages && el( Masonry, {
-                className: classnames( className, { 'my-8': true } ),
+                className: classnames( className, { 'my-2': true } ),
             }, attributes.gallery.map( img => {
-                return el( 'div', { key: img.id.toString(), className: classnames( 'w-1/3', 'border', 'p-4' ) }, ( img.caption || img.url ) )
+                return el( 'div', { key: img.id.toString(), className: classnames( 'w-1/3', 'border', 'p-1' ) }, ( img.caption || img.url ) )
             } ) ) )
         ];
     }
