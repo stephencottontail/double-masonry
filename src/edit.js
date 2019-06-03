@@ -36,11 +36,15 @@ class DoubleMasonry extends Component {
 
         return [
             mediaUpload,
-            ( hasImages && el( Masonry, {
-                className: classnames( className, { 'my-8': true } ),
-            }, attributes.gallery.map( img => {
-                return el( 'div', { key: img.id.toString(), className: classnames( 'w-1/3', 'border', 'p-4' ) }, ( img.caption || img.url ) )
-            } ) ) )
+            el( Masonry,
+                {
+                    className: classnames( className, { 'my-8': true } )
+                },
+                el( 'div', { className: `${className}__sizer` } ),
+                attributes.gallery.map( img => {
+                    return el( 'div', { key: img.id.toString(), className: classnames( 'w-1/3', 'border', 'p-4' ) }, ( img.caption || img.url ) )
+                } )
+              )
         ];
     }
 }
