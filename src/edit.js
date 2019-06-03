@@ -3,48 +3,15 @@ import { MediaUpload } from '@wordpress/block-editor';
 import Masonry from 'react-masonry-component';
 import Measure from 'react-measure';
 import classnames from 'classnames';
+import createMasonryBrick from './utils';
 
 class DoubleMasonry extends Component {
     constructor() {
         super( ...arguments );
-
-        this.checkBrickSize.bind( this );
-        this.createMasonryBrick.bind( this );
     }
 
     componentDidUpdate() {
         this.masonry.layout();
-    }
-
-    checkBrickSize( element ) {
-        const { className } = this.props;
-        let referenceWidth = Math.round( this.props.attributes.width / 2 );
-        let smallest = this.props.attributes.gallery.reduce( ( smallest, img ) => {
-            return ( smallest < img.sizes.full.width ? smallest : img.sizes.full.width );
-        } );
-        let classes = [ `${className}__item`, 'p-4' ];
-
-        if ( smallest > referenceWidth ) {
-            classes.push( 'w-1/3' );
-            return classes;
-        }
-
-        if ( element.sizes.full.width < referenceWidth ) {
-            classes.push( 'w-1/3' );
-            return classes;
-        } else {
-            classes.push( 'w-2/3' );
-            return classes;
-        }
-    }
-
-    createMasonryBrick( element ) {
-        return el( 'div',
-                   { key: element.id.toString(), className: classnames( this.checkBrickSize( element ) ) },
-                   el( 'img', {
-                       alt: ( element.alt || undefined ),
-                       src: element.sizes.full.url
-                   } ) );
     }
 
     render() {
@@ -73,7 +40,7 @@ class DoubleMasonry extends Component {
                             },
                             el( 'div', { className: `${className}__sizer` } ),
                             attributes.gallery.map( img => {
-                                return this.createMasonryBrick( img );
+                                return createMasonryBrick( img, className, attributes );
                             } )
                           );
 
