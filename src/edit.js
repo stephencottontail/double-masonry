@@ -9,6 +9,10 @@ class DoubleMasonry extends Component {
         super( ...arguments );
     }
 
+    componentDidUpdate() {
+        console.log( 'the new width is ' + this.props.attributes.width );
+    }
+
     render() {
         const { attributes, setAttributes, className } = this.props;
         const hasImages = !! attributes.gallery.length;
@@ -28,6 +32,11 @@ class DoubleMasonry extends Component {
             },
             value: ( hasImages ? ( attributes.gallery.map( img => img.id ) ) : undefined )
         } );
+        const masonry = el( Masonry, {
+            className: classnames( className, 'my-8' )
+        }, attributes.gallery.map( img => {
+            return el( 'div', { key: img.id.toString(), className: classnames( 'w-1/3', 'border', 'p-4' ) }, ( img.caption || img.url ) )
+        } ) );
 
         if ( hasImages ) {
             let widths = attributes.gallery.reduce( ( smallest, img ) => {
@@ -37,43 +46,12 @@ class DoubleMasonry extends Component {
 
         return [
             mediaUpload,
-            ( hasImages && (
-                <Measure
-                bounds
-                onResize={ ( contentRect ) => console.log( contentRect ) }
-                >
-                    { ( { measureRef } ) => {
-                        return [
-                        /**
-                         * the docs don't mention this, but you need `innerRef` instead of just ref for
-                         * 'special' components (i.e., anything that's not a base HTML tag)
-                         *
-                         * what's the difference between `ref` and `innerRef`? no one knows
-                         */
-                        <Masonry innerRef={ measureRef } className={ classnames( className, { 'my-8': true } ) }>
-                            { attributes.gallery.map( img => {
-                                return (
-                                    <div key={ img.id } className={ classnames( 'w-1/3', 'border', 'p-4' ) }>
-                                        { ( img.caption || img.url ) }
-                                    </div>
-                                );
-                            } ) }
-                        </Masonry>
-                    ] } }
-                </Measure>
-            ) ),
-            /*
             ( hasImages && el( Measure, {
-                onResize: ( contentRect ) => { console.log( contentRect ) }
-            }, ( { measureRef } ) => {
-                return el( Masonry, {
-                    ref: { measureRef },
-                    className: classnames( className, { 'my-8': true } )
-                }, attributes.gallery.map( img => {
-                    return el( 'div', { key: img.id, className: classnames( 'w-1/3', 'border', 'p-4' ) }, ( img.caption || img.url ) )
-                } ) );
-            } ) )
-            */
+                bounds: true,
+                onResize: contentRect => setAttributes( { width: contentRect.bounds.width } )
+            }, ( { measureRef, contentRect } ) => (
+                el( 'div', { ref: measureRef }, masonry )
+            ) ) )
         ];
     }
 }
