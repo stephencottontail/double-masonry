@@ -36,7 +36,13 @@ class DoubleMasonry extends Component {
         const masonry = el( Masonry,
                             {
                                 ref: function( c ) { this.masonry = this.masonry || c.masonry; }.bind( this ),
-                                className: classnames( className, 'my-8' )
+                                className: classnames( className, 'my-8' ),
+                                masonryOptions: {
+                                    itemSelector: `.${className}__item`,
+                                    columnWidth: `.${className}__sizer`,
+                                    transitionDuration: 0.2,
+                                    percentPosition: true
+                                }
                             },
                             el( 'div', { className: `${className}__sizer` } ),
                             attributes.gallery.map( img => {

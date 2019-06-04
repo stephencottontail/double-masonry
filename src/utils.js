@@ -4,7 +4,6 @@ import classnames from 'classnames';
 function checkBrickSize( element, attributes ) {
     let referenceWidth = Math.round( attributes.width / 2 );
     let smallest = attributes.gallery.reduce( ( smallest, img ) => {
-        console.log( img );
         return ( smallest < img.sizes.full.width ? smallest : img.sizes.full.width );
     }, 0 );
 
