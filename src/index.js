@@ -5,7 +5,6 @@ import { registerBlockType, getBlockDefaultClassName } from '@wordpress/blocks';
 import { createElement as el } from '@wordpress/element';
 import Masonry from 'react-masonry-component';
 import classnames from 'classnames';
-import createMasonryBrick from './utils';
 import edit from './edit';
 
 registerBlockType( 'sc/double-masonry', {
@@ -29,12 +28,22 @@ registerBlockType( 'sc/double-masonry', {
         const hasImages = !! attributes.gallery.length;
         const masonry = el( Masonry,
                             {
-                                ref: function( c ) { this.masonry = this.masonry || c.masonry; }.bind( this ),
                                 className: classnames( className, 'my-8' )
                             },
                             el( 'div', { className: `${className}__sizer` } ),
                             attributes.gallery.map( img => {
-                                return createMasonryBrick( img, className, attributes );
+                                return el( 'div',
+                                           {
+                                               key: img.id.toString(),
+                                               className: classnames( `${className}__item`, 'p-4' )
+                                           },
+                                           el( 'img',
+                                               {
+                                                   alt: ( img.alt || undefined ),
+                                                   src: img.sizes.full.url
+                                               }
+                                             )
+                                         );
                             } )
                           );
 
