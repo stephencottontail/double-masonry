@@ -31,20 +31,29 @@ registerBlockType( 'sc/double-masonry', {
                                 className: classnames( className, 'my-8' )
                             },
                             el( 'div', { className: `${className}__sizer` } ),
-                            attributes.gallery.map( img => {
-                                return el( 'div',
-                                           {
-                                               key: img.id.toString(),
-                                               className: classnames( `${className}__item`, 'p-4' )
-                                           },
-                                           el( 'img',
-                                               {
-                                                   alt: ( img.alt || undefined ),
-                                                   src: img.sizes.full.url
-                                               }
-                                             )
-                                         );
-                            } )
+                            [
+                                attributes.gallery.map( img => {
+                                    return el( 'div',
+                                                {
+                                                    key: img.id.toString(),
+                                                    className: classnames( `${className}__item`, 'p-4' )
+                                                },
+                                            el( 'img',
+                                                {
+                                                    alt: ( img.alt || undefined ),
+                                                    src: img.sizes.full.url
+                                                }
+                                                ),
+                                            ( img.caption && el( 'div',
+                                                                    {
+                                                                        className: classnames( `{$className}))caption`, 'font-light', 'text-center' )
+
+                                                                    },
+                                                                    img.caption )
+                                            )
+                                            );
+                                } )
+                            ]
                           );
 
         return ( hasImages && masonry );

@@ -24,10 +24,20 @@ function createMasonryBrick( element, className, attributes ) {
 
     return el( 'div',
                { key: element.id.toString(), className: classnames( classes, size ) },
-               el( 'img', {
-                   alt: ( element.alt || undefined ),
-                   src: element.sizes.full.url
-               } ) );
+               [
+                   el( 'img',
+                       {
+                           alt: ( element.alt || undefined ),
+                           src: element.sizes.full.url
+                       } ),
+                   ( element.caption && el( 'div',
+                                            {
+                                                className: classnames( `${className}__caption`, 'font-light', 'text-center' )
+                                            },
+                                            element.caption )
+                   )
+               ]
+             )
 }
 
 export default createMasonryBrick;
