@@ -8,6 +8,24 @@ module.exports = {
                 '200': 'hsl( 195, 45%, 90% )',
                 '100': 'hsl( 195, 25%, 95% )'
             }
+        },
+        spacing: {
+            '4': '1rem',
+            '8': '2rem',
+            '1/3': '33.33333%',
+            '2/3': '66.66667%'
         }
-    }
+    },
+    corePlugins: [
+        'backgroundColor',
+        'borderColor',
+        'borderWidth',
+        'borderStyle',
+        'display',
+        'margin',
+        'padding',
+        'textColor',
+        'width'
+    ],
+    variants: []
 }
