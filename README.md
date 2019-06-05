@@ -2,6 +2,7 @@
 
 A gallery block that uses Masonry for a clean viewing experience
 
-## Notes ##
+## TODOs ##
 
-* None yet
+* Exposing the Masonry options to the editor might be nice
+* Rewrite some code so PurgeCSS can be used
