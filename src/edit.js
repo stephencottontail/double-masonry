@@ -1,4 +1,4 @@
-import { Component, createElement as el } from '@wordpress/element';
+import { Component } from '@wordpress/element';
 import { MediaUpload } from '@wordpress/block-editor';
 import Masonry from 'react-masonry-component';
 import Measure from 'react-measure';

@@ -1,4 +1,3 @@
-import { createElement as el } from '@wordpress/element';
 import classnames from 'classnames';
 
 function checkBrickSize( element, attributes ) {
