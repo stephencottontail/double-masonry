@@ -17,48 +17,51 @@ class DoubleMasonry extends Component {
     render() {
         const { attributes, setAttributes, className } = this.props;
         const hasImages = !! attributes.gallery.length;
-        const mediaUpload = el( MediaUpload, {
-            addToGallery: hasImages,
-            gallery: true,
-            multiple: true,
-            onSelect: ( img ) => {
-                setAttributes( { gallery: img } )
-            },
-            allowedTypes: [ 'image' ],
-            render: ( { open } ) => {
-                return el( 'button', {
-                    className: classnames( `${className}__button ${className}__button--primary` ),
-                    onClick: open
-                }, `${( hasImages ? 'Edit' : 'Create' )} Gallery` )
-            },
-            value: ( hasImages ? ( attributes.gallery.map( img => img.id ) ) : undefined )
-        } );
-        const masonry = el( Masonry,
-                            {
-                                ref: function( c ) { this.masonry = this.masonry || c.masonry; }.bind( this ),
-                                className: classnames( className, 'my-8' ),
-                                masonryOptions: {
-                                    itemSelector: `.${className}__item`,
-                                    columnWidth: `.${className}__sizer`,
-                                    transitionDuration: 0.2,
-                                    percentPosition: true
-                                }
-                            },
-                            el( 'div', { className: `${className}__sizer` } ),
-                            attributes.gallery.map( img => {
-                                return createMasonryBrick( img, className, attributes );
-                            } )
-                          );
+        const mediaUpload = <MediaUpload
+                                addToGallery={ hasImages }
+                                value={ hasImages ? ( attributes.gallery.map( img => img.id ) ) : undefined }
+                                gallery
+                                multiple
+                                onSelect={ img => { setAttributes( { gallery: img } ) } }
+                                allowedTypes={ [ 'image' ] }
+                                render={ ( { open } ) => (
+                                    <button
+                                        className={ classnames( `${className}__button ${className}__button--primary` ) }
+                                        onClick={ open }
+                                    >
+                                        { `${( hasImages ? 'Edit' : 'Create' )} Gallery` }
+                                    </button>
+                                ) }
+                            />
 
+        const masonry = <Masonry
+                            ref={ function(c) { this.masonry = this.masonry || c.masonry; }.bind( this ) }
+                            className={ classnames( className, 'my-8' ) }
+                            masonryOptions={ {
+                                itemSelector: `.${className}__item`,
+                                columnWidth: `.${className}__sizer`,
+                                transitionDuration: 0.2,
+                                percentPosition: true
+                            } }
+                        >
+                            <div className={ `${className}__sizer` } />
+                            { attributes.gallery.map( img => {
+                                return createMasonryBrick( img, className, attributes );
+                            } ) }
+                        </Masonry>
+
+        const measure = <Measure
+                            bounds
+                            onResize={ contentRect => setAttributes( { width: contentRect.bounds.width } ) }
+                        >
+                            { ( { measureRef, contentRect } ) => (
+                                <div ref={ measureRef }>{ masonry }</div>
+                            ) }
+                        </Measure>
         return [
             mediaUpload,
-            ( hasImages && el( Measure, {
-                bounds: true,
-                onResize: contentRect => setAttributes( { width: contentRect.bounds.width } )
-            }, ( { measureRef, contentRect } ) => (
-                el( 'div', { ref: measureRef }, masonry )
-            ) ) )
-        ];
+            measure
+        ]
     }
 }
 

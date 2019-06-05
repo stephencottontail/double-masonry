@@ -26,35 +26,25 @@ registerBlockType( 'sc/double-masonry', {
     save( { attributes } ) {
         const className = getBlockDefaultClassName( 'sc/double-masonry' );
         const hasImages = !! attributes.gallery.length;
-        const masonry = el( Masonry,
-                            {
-                                className: classnames( className, 'my-8' )
-                            },
-                            el( 'div', { className: `${className}__sizer` } ),
-                            [
-                                attributes.gallery.map( img => {
-                                    return el( 'div',
-                                                {
-                                                    key: img.id.toString(),
-                                                    className: classnames( `${className}__item`, 'p-4' )
-                                                },
-                                            el( 'img',
-                                                {
-                                                    alt: ( img.alt || undefined ),
-                                                    src: img.sizes.full.url
-                                                }
-                                                ),
-                                            ( img.caption && el( 'div',
-                                                                    {
-                                                                        className: classnames( `{$className}))caption`, 'font-light', 'text-center' )
-
-                                                                    },
-                                                                    img.caption )
-                                            )
-                                            );
-                                } )
-                            ]
-                          );
+        const masonry = <Masonry
+                            className={ classnames( className, 'my-8' ) }
+                        >
+                            <div
+                                className={ `${className}__sizer` }
+                            />
+                            { attributes.gallery.map( img => [
+                                <div
+                                    key={ img.id.toString }
+                                    className={ classnames( `${className}__item`, 'p-4' ) }
+                                >
+                                    <img
+                                        alt={ ( img.alt || undefined ) }
+                                        src={ img.sizes.full.url }
+                                    />
+                                    { img.caption && <div className={ classnames( 'text-center', 'font-light' ) }>{ img.caption }</div> }
+                                </div>
+                            ] ) }
+                        </Masonry>
 
         return ( hasImages && masonry );
     }
